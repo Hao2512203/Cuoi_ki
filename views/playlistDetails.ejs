@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlist Details</title>
+    <style>
+        body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+h2 {
+  color: #555;
+}
+
+h3 {
+  color: #007bff;
+}
+
+.form-container {
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.playlist {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+  margin-bottom: 15px;
+}
+
+.playlist:last-child {
+  border-bottom: none;
+}
+
+.playlist ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.playlist ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.playlist ul li img {
+  margin-right: 15px;
+  border-radius: 5px;
+}
+
+.playlist ul li div {
+  flex-grow: 1;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.video {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.video img {
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.video div {
+  flex-grow: 1;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Playlist: <%= playlist.name %></h1>
+    <p>Playlist ID: <%= playlist.playlistId %></p>
+    <div id="videos">
+      <% playlist.videos.forEach(video => { %>
+        <div class="video">
+          <% if (video.thumbnail) { %>
+            <img src="<%= video.thumbnail %>" alt="<%= video.title %>" width="120">
+          <% } %>
+          <div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= video.videoId %>" frameborder="0" allowfullscreen></iframe>
+            <p><strong>Title:</strong> <%= video.title %></p>
+            <p><strong>Description:</strong> <%= video.description %></p>
+            <!-- <a href="https://www.youtube.com/watch?v=<%= video.videoId %>" target="_blank">Watch Video</a> -->
+          </div>
+        </div>
+      <% }) %>
+    </div>
+    <a href="/playlist">Back to Playlists</a>
+  </div>
+</body>
+</html>

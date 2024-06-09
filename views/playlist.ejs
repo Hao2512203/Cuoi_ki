@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlists</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .playlist {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .playlist:last-child {
+      border-bottom: none;
+    }
+    .playlist h2 {
+      margin: 0;
+      color: #333;
+    }
+    .playlist p {
+      margin: 5px 0;
+      color: #666;
+    }
+    .playlist ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .playlist ul li {
+      background-color: #f9f9f9;
+      margin-bottom: 5px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <form action="/users/logout" method="post">
+    <button type="submit">logout</button>
+  </form>
+  <h1>Manage Playlist</h1>
+  <h1>Create Playlist</h1>
+  <form action="/api/playlists/create" method="POST">
+    <label for="name">Playlist Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="playlistId">YouTube Playlist ID:</label>
+    <input type="text" id="playlistId" name="playlistId" required><br>
+    <button type="submit">Create</button>
+  </form>
+  <h1>Your Playlists</h1>
+  <div id="playlists">
+    <% playlists.forEach(playlist => { %>
+        <div>
+            <h2><%= playlist.name %></h2>
+            <p>Playlist ID: <%= playlist.playlistId %></p>
+            <ul>
+                <% playlist.videos.forEach(video => { %>
+                    <li>
+                        <p>Video ID: <%= video.videoId %></p>
+                        <p>Title: <%= video.title %></p>
+                    </li>
+                <% }) %>
+            </ul>
+            <a href="/api/playlists/<%= playlist._id %>">View Details</a>
+            <form action="/api/playlists/delete" method="post">
+                <input type="hidden" name="playlistId" value="<%= playlist._id %>">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    <% }) %>
+  </div>
+</body>
+</html>
