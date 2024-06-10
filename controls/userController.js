@@ -1,12 +1,12 @@
 const User = require('../models/User')
 
 exports.registerUser = async (req,res) => {
-    const {username,password,role} = req.body
+    const {username,password,full_name} = req.body
     try {
         const existingUser = await User.findOne({ username })
         if (existingUser ) return res.status.json({message : 'User already exists'})
         
-        const new_user =  new User({ username , password ,role})
+        const new_user =  new User({ username , password ,full_name})
 
         await new_user.save()
         res.render('login')
