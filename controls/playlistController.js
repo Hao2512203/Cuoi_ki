@@ -12,6 +12,7 @@ exports.createPlaylist = async (req, res) => {
         const response = await axios.get(`${YTB_API_URL}/playlistItems`, {
             params: {
                 part: 'snippet',
+                maxResults: 20,
                 playlistId: playlistId,
                 key: YTB_API_KEY
             }
@@ -38,20 +39,20 @@ exports.createPlaylist = async (req, res) => {
         console.log(error);
     }
 };
-exports.getPlaylists = async (req, res) => {
-    try {
-        const user = req.session.user
-        const playlists = await Playlist.find({user: user}, (err,res) =>{
-            if(err) console.log(err)
+// exports.getPlaylists = async (req, res) => {
+//     try {
+//         const user = req.session.user
+//         const playlists = await Playlist.find({user: user}, (err,res) =>{
+//             if(err) console.log(err)
             
-            console.log(res)
-        })
-        res.render('playlist', { playlists: playlists });
-    } catch (error) {
-        res.status(500).json({ message: 'Something went wrong' });
-        console.log(error);
-    }
-};
+//             console.log(res)
+//         })
+//         res.render('playlist', { playlists: playlists });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Something went wrong' });
+//         console.log(error);
+//     }
+// };
 exports.deletePlaylist = async (req, res) => {
     try {
         const { playlistId } = req.body;
